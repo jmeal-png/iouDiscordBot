@@ -3,9 +3,10 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from datetime import datetime, timedelta, timezone
+from typing import Optional
 
 # --- CONFIG ---
-TOKEN = "TOKEN"  # replace with your real token or use an env var
+TOKEN = "MTQ4MjIyNDQ4ODI5MTYzMTI2NA.G6zX3o.KSHVn-xw8vOHR-WyZ4YvZf4ERw_lIXSlD2l9-k"  # replace with your real token or use an env var
 
 # --- INTENTS ---
 intents = discord.Intents.default()
@@ -63,55 +64,21 @@ async def on_ready():
 @app_commands.describe(
     amount="Total amount paid",
     description="What was this expense for?",
-    participants="Mention everyone who benefited (including payer if applicable)"
+    payer_included="Should the payer be included as a participant?"
 )
 async def add_expense(
     interaction: discord.Interaction,
     amount: float,
     description: str,
-    participants: str
+    participant1: discord.User,
+    participant2: Optional[discord.User] = None,
+    participant3: Optional[discord.User] = None,
+    participant4: Optional[discord.User] = None,
+    participant5: Optional[discord.User] = None,
+    participant6: Optional[discord.User] = None,
+    payer_included: bool = True,
 ):
-    """
-    Example usage:
-    /add_expense amount:30 description:"Pizza" participants:"@user1 @user2 @user3"
-    """
-    if interaction.guild is None:
-        await interaction.response.send_message(
-            "This command can only be used in a server.", ephemeral=True
-        )
-        return
-
-    guild_id = interaction.guild.id
-    payer_id = interaction.user.id
-
-    # Basic parsing of participants: use mentioned users in the command
-    # (Discord will still show them as mentions in the string, but more robust
-    # parsing would use options or MessageCommand; this is kept simple.)
-    mentioned_ids = {u.id for u in interaction.user.mentions} if hasattr(interaction.user, "mentions") else set()
-    # Better: use the interaction's resolved data, but for a simple example we
-    # allow a manual list and always include payer if they want.
-    # For now, we'll just include the payer as the only participant if we
-    # cannot parse others.
-    if not mentioned_ids:
-        participant_ids = [payer_id]
-    else:
-        participant_ids = list(mentioned_ids)
-
-    exp_list = get_guild_expenses(guild_id)
-    expense = {
-        "payer_id": payer_id,
-        "participants": participant_ids,
-        "amount": amount,
-        "description": description,
-        "timestamp": datetime.now(timezone.utc),
-    }
-    exp_list.append(expense)
-
-    await interaction.response.send_message(
-        f"Recorded expense **${amount:.2f}** by {interaction.user.mention} "
-        f"for **{description}** with {len(participant_ids)} participant(s)."
-    )
-
+        await interaction.response.send_message("Expense added! (not implemented yet)")
 
 @bot.tree.command(name="list_expenses", description="List recent expenses for this server.")
 async def list_expenses(interaction: discord.Interaction):
