@@ -4,7 +4,7 @@ from discord.ext import commands
 from discord import app_commands
 
 # --- CONFIG ---
-TOKEN = "MTQ4MjIyNDQ4ODI5MTYzMTI2NA.GD5hiN.L2crKWqEGTnu3pgYQ_kFDMVEq0vgJ3qHPKANEQ"  # replace with your real token or use an env var
+TOKEN = "TOKEN"  # replace with your real token or use an env var
 
 # --- INTENTS ---
 intents = discord.Intents.default()
