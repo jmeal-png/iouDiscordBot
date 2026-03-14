@@ -213,7 +213,8 @@ async def add_expense(
         )
         return
 
-    split_amount = round(amount / len(unique_users), 2)
+    total_people = len(unique_users) + 1  # include the payer
+    split_amount = round(amount / total_people, 2)
 
     for user in unique_users:
         add_debt(str(user.id), payer_id, split_amount)
@@ -222,11 +223,10 @@ async def add_expense(
 
     await interaction.response.send_message(
         f"Expense recorded.\n"
-        f"You paid **${amount:.2f}**.\n"
-        f"Each tagged user owes you **${split_amount:.2f}**.\n"
-        f"Involved: {mentions}"
+        f"Total bill: **${amount:.2f}**\n"
+        f"Split between **{total_people}** people, so each share is **${split_amount:.2f}**.\n"
+        f"{mentions} now owe you **${split_amount:.2f}** each."
     )
-
 
 @bot.tree.command(name="payback", description="Record that you paid someone back.")
 @app_commands.describe(
