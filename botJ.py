@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 # --- CONFIG ---
-TOKEN = "TOKEN"  # replace with your real token or use an env var
+TOKEN = "MTQ4MjIyNDQ4ODI5MTYzMTI2NA.GyWr6D.rJ50_Fw3So5OWjrrSwvVPhFChe9WiGTczLdNjQ"  # replace with your real token or use an env var
 
 # --- INTENTS ---
 intents = discord.Intents.default()
